@@ -13,7 +13,7 @@ export default function Welcome(){
 			
 			<Image source={require('./welcome.png')} style={style1.imag} />
 			<Pressable>
-				<Text onPress={()=>setapp(true)}>logout</Text>
+				<Text style={{fontSize:20}} onPress={()=>setapp(true)}>logout</Text>
 			</Pressable>
 		</View>
 		}
