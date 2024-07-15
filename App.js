@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View,Button,Pressable } from 'react-native';
+import { StyleSheet, Text, View,Button,Pressable, ActivityIndicator } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import SignUp from './Signup';
 
@@ -13,7 +13,7 @@ export default function App() {
       <View>
         <Text style={{fontSize:40,margin:100,marginHorizontal:20}}>Join Now  By Clicking Below</Text> 
       <Pressable style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',marginTop:400}}>
-        <Text style={style1.button} onPress={()=>setsignup(true)}>Get Started With The App</Text>
+        <Text style={style2.button} onPress={()=>setsignup(true)}>Get Started With The App</Text>
       </Pressable>
       </View>
     )
@@ -22,7 +22,8 @@ export default function App() {
   </View>)
 }
 
-const style1=StyleSheet.create({
+
+const style2=StyleSheet.create({
   button:{
     paddingHorizontal:30,
     paddingVertical:10,

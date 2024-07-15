@@ -1,19 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View,Button,Pressable, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View,Button,Pressable, TextInput, Alert, ImageBackground } from 'react-native';
 import Welcome from './welcome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
- function Login(){
+
+const staticImage = require("./assets/welcome.png");
+
+ function Login(props){
 	const [welcome,setwelcome]=useState(false);
 	const [loginemail, setEmail] = useState('');
 	const [loginpassword, setPassword] = useState('');
-	const email='';
-	const password='';
+	const {email,password,username}=props;
+	// const email=props.email;
+	// const password=props.password;
 	const handleChange=()=>{
+		//console.log(props);
 		// async function handle(){
 		// 	const email=await AsyncStorage.getItem('email')
 		// 	const password=await AsyncStorage.getItem('password')
-			if(email===loginpassword && password===loginemail){
+			if(email==loginemail && password==loginpassword){
 				setwelcome(true);
 			}
 			
@@ -22,8 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 				console.log(loginpassword);
 				console.log(email);
 				console.log(password);
-			// AsyncStorage.removeItem(email);
-			// AsyncStorage.removeItem(password);
+			
 			}
 			setwelcome(true);
 		}
@@ -65,7 +68,13 @@ const style1=StyleSheet.create({
 	btn:{
 		backgroundColor:"rgb(247,175,20)",
 		borderRadius:10
-	}
+	},
+	ImageBackground: {
+		flex: 1,
+		resizeMode: "cover",
+		width: "100%",
+		alignItems: "center",
+	  },
 });
 
 export default Login
