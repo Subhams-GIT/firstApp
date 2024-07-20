@@ -1,36 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View,Button,Pressable, ActivityIndicator } from 'react-native';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import SignUp from './Signup';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from "./HomeScreen"
+import SignUp from "./Signup";
+import Login from "./Login";
+import Cards from "./product";
+import Welcome from "./welcome";
+import Prod from "./products2";
+import ThemeProvider from "./Context/Context"
+const Stack = createNativeStackNavigator();
 
-export default function App() {
-  const [signup,setsignup]=useState(false);
-
+export default function App(){
   return (
-  <View>
-    {signup?(<SignUp/>):(
-      <View>
-        <Text style={{fontSize:40,margin:100,marginHorizontal:20}}>Join Now  By Clicking Below</Text> 
-      <Pressable style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',marginTop:400}}>
-        <Text style={style2.button} onPress={()=>setsignup(true)}>Get Started With The App</Text>
-      </Pressable>
-      </View>
-    )
-    }
-    
-  </View>)
+    <ThemeProvider>
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Screen name="HomeScreen" component={HomeScreen}/> 
+        <Stack.Screen name="SignUp" component={SignUp}/> 
+        <Stack.Screen name="Login" component={Login}/> 
+        <Stack.Screen name="Welcome" component={Welcome}/> 
+        <Stack.Screen name="Products" component={Cards}/> 
+      </Stack.Navigator>
+    </NavigationContainer>
+   </ThemeProvider>
+  )
 }
-
-
-const style2=StyleSheet.create({
-  button:{
-    paddingHorizontal:30,
-    paddingVertical:10,
-    fontSize:30,
-    marginBottom:10,
-    marginHorizontal:30,
-    backgroundColor:'rgb(247,175,20)',
-    borderRadius:10
-  }
-})

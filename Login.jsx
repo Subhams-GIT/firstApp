@@ -1,80 +1,73 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View,Button,Pressable, TextInput, Alert, ImageBackground } from 'react-native';
-import Welcome from './welcome';
+import { ThemeContext} from './Context/Context';
+import { useContext, useState } from 'react';
+import { StyleSheet, Text, SafeAreaView, Pressable, TextInput, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
-const staticImage = require("./assets/welcome.png");
 
- function Login(props){
-	const [welcome,setwelcome]=useState(false);
+function Login({ navigation }) {
+	const { theme, updateTheme } = useContext(ThemeContext);
 	const [loginemail, setEmail] = useState('');
 	const [loginpassword, setPassword] = useState('');
-	const {email,password,username}=props;
-	// const email=props.email;
-	// const password=props.password;
-	const handleChange=()=>{
-		//console.log(props);
-		// async function handle(){
-		// 	const email=await AsyncStorage.getItem('email')
-		// 	const password=await AsyncStorage.getItem('password')
-			if(email==loginemail && password==loginpassword){
-				setwelcome(true);
-			}
-			
-			else {
-				console.log(loginemail);
-				console.log(loginpassword);
-				console.log(email);
-				console.log(password);
-			
-			}
-			setwelcome(true);
+	const route = useRoute();
+	const username = route.params.username;
+	const password = route.params.password;
+	const email = route.params.email;
+	const handleChange = () => {
+		if (email == loginemail && password == loginpassword) {
+			navigation.navigate("Welcome", {
+				username: username,
+			})
 		}
 
+		else {
+			console.log(loginemail);
+			console.log(loginpassword);
+			console.log(email);
+			console.log(password);
+		}
+		// navigation.navigate("Welcome", {
+		// 	username: username,
+		// })}
+	}
 	return (
-	<View>
-		{welcome?(<Welcome/>):(
-		<View style={style1.view}>
-			<TextInput placeholder='enter email' value={loginemail} onChangeText={(value)=>setEmail(value)} style={style1.email}/>
-			<TextInput placeholder='enter password' value={loginpassword} onChangeText={(value)=>setPassword(value)} style={style1.email}/>
-			<Pressable>
-				<Text style={[style1.btn,style1.email]} onPress={handleChange}>Sign In</Text>
-			</Pressable>
-		</View>
- 	)}
-	</View>
-		
-	)
- }
+		<SafeAreaView>
+			<SafeAreaView style={[style1.total, { backgroundColor: `${theme}` }]}>
+				<View style={{ height: 100, width: 200 }}>
+					<Text style={{ fontWeight: 1000, fontSize: 50 }}>Login!</Text>
+				</View>
+				<TextInput placeholder='enter email' value={loginemail} onChangeText={(value) => setEmail(value)} style={[style1.email, { color:"black" }]} />
+				<TextInput placeholder='enter password' value={loginpassword} onChangeText={(value) => setPassword(value)} style={style1.email} />
+				<Pressable>
+					<Text style={[style1.btn, style1.email]} onPress={handleChange}>Sign In</Text>
+				</Pressable>
+			</SafeAreaView>
+		</SafeAreaView>
 
-const style1=StyleSheet.create({
-	view: {
-		display:'flex',
-		justifyContent:'center',
-		alignItems:'center',
-		height:'100%',
-		width:'100%',
-		gap:19,
-	  },
-	email:{
-		fontSize:15,
-		borderColor:"black",
-		borderWidth:1,
-		height:50,
-		width:"80%",
-		padding:10,
-		borderRadius:12
+	)
+}
+
+const style1 = StyleSheet.create({
+	total: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: '100%',
+		width: '100%',
+		gap: 19,
 	},
-	btn:{
-		backgroundColor:"rgb(247,175,20)",
-		borderRadius:10
+	email: {
+		fontSize: 20,
+		borderColor: "black",
+		borderWidth: 1,
+		height: 60,
+		width: "80%",
+		padding: 10,
+		borderRadius: 12
 	},
-	ImageBackground: {
-		flex: 1,
-		resizeMode: "cover",
-		width: "100%",
-		alignItems: "center",
-	  },
+	btn: {
+		backgroundColor: "white",
+		borderRadius: 10
+	}
 });
 
 export default Login

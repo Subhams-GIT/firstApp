@@ -1,51 +1,56 @@
-import {View, StyleSheet, Text, Image, Button, Pressable,ActivityIndicator} from "react-native";
-import App from "./App";
-import {useState,lazy,Suspense} from "react";
-const Cards = lazy(() => import("./product"));
+import {View, StyleSheet, Text,Pressable} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRoute } from "@react-navigation/native";
+import { ThemeContext } from "./Context/Context";
+import { useContext } from "react";
+export default function Welcome({navigation}) {
+  const { theme, updateTheme } = useContext(ThemeContext);
+  const route=useRoute();
+  const username=route.params.username;
 
-
-export default function Welcome() {
-  const [app, setapp] = useState(false);
-  const [product, setproduct] = useState(false);
-
-  if(app) return <App/>;
-  if(product)
   return (
-    <Suspense fallback={<ActivityIndicator size="large" color="#0000ff" />}>
-      <Cards />
-    </Suspense>
-  )
-  else
-  return (
-    <View>
-        <View>
+
+         <SafeAreaView style={{height:"100%",backgroundColor:`${theme}`}}>
+          <Text style={{fontSize:30,marginLeft:"40%",marginHorizontal:"40%",}}>Hello {username}!</Text>
           <Pressable style={style1.view}>
-            <Text style={style1.imag} onPress={() => setapp(true)}>
-              logout
+            <Text style={style1.imag} onPress={()=>navigation.navigate("Products")}>
+              Laptops 
             </Text>
-            <Text style={style1.imag} onPress={() => setproduct(true)}>
-              Products
+            <Text style={style1.imag} onPress={()=>navigation.navigate('Products')}>
+              HeadPhones
+            </Text>
+            <Text style={style1.imag} onPress={()=>navigation.navigate('Products')}>
+              Watches
+            </Text>
+            <Text style={style1.imag} onPress={()=>navigation.navigate('Products')}>
+              Soundbars
+            </Text>
+            <Text style={style1.imag} onPress={()=>navigation.navigate('Products')}>
+              BackPacks
             </Text>
           </Pressable>
-        </View>
-
-    </View>
+          </SafeAreaView>
   );
 }
 
 const style1 = StyleSheet.create({
   view: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: 600,
-    marginHorizontal: 100,
-    gap: 120,
+    display:"flex",
+    justifyContent:"center",
+    marginLeft: 80,
+    width:"70%",
+    marginTop:20
   },
   imag: {
-    fontSize: 30,
+    height:100,
+    width:"100%",
+    fontSize: 22,
+    marginBottom:50,
     borderColor: "black",
-    backgroundColor: "rgb(247,175,20)",
-    height: 50,
+    paddingLeft:"30%",
+    paddingTop:"10%",
+    backgroundColor: "white",
     borderRadius: 10,
+    borderWidth:2,
   },
 });
