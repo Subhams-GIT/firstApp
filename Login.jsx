@@ -1,34 +1,36 @@
 import { ThemeContext} from './Context/Context';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, Pressable, TextInput, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function Login({ navigation }) {
 	const { theme, updateTheme } = useContext(ThemeContext);
 	const [loginemail, setEmail] = useState('');
 	const [loginpassword, setPassword] = useState('');
-	const route = useRoute();
-	const username = route.params.username;
-	const password = route.params.password;
-	const email = route.params.email;
-	const handleChange = () => {
-		if (email == loginemail && password == loginpassword) {
-			navigation.navigate("Welcome", {
-				username: username,
-			})
-		}
 
-		else {
-			console.log(loginemail);
-			console.log(loginpassword);
-			console.log(email);
-			console.log(password);
-		}
-		// navigation.navigate("Welcome", {
-		// 	username: username,
-		// })}
-	}
+	
+	const handleChange = async () => {
+		const email=await AsyncStorage.getItem('email');
+		const password=await AsyncStorage.getItem('password');
+		const username=await AsyncStorage.getItem('username')
+		// if (email == loginemail && password == loginpassword) {
+		// 	navigation.navigate("Welcome",{
+		// 		username:username
+		// 	});
+		// }
+
+		// else {
+		// 	console.log(loginemail);
+		// 	console.log(loginpassword);
+		// 	console.log(email);
+		// 	console.log(password);
+		// }
+		navigation.navigate("Welcome", {
+			username: "subham",
+		})}
+	
 	return (
 		<SafeAreaView>
 			<SafeAreaView style={[style1.total, { backgroundColor: `${theme}` }]}>

@@ -1,10 +1,12 @@
 import { useContext, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView,Button,Pressable, TextInput,Alert,Image,Switch } from 'react-native';
 import { ThemeContext} from './Context/Context';
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 let textcolor="";
 
 export default function SignUp({navigation}) {
+	
 	const { theme, updateTheme } = useContext(ThemeContext);
 	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	const specialChars = /^[a-zA-Z0-9]+[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -18,30 +20,27 @@ export default function SignUp({navigation}) {
 	};
   
 	function loginAndSetFunc() {
-	  if (userdata.email === '' || userdata.username === '' || userdata.password === '') {
-		Alert.alert("no info provided!");
-		return ;
-	  }
-	  else if(!emailRegex.test(userdata.email) && !specialChars.test(userdata.password)) return ;
-	  if (userdata.password === repeatPassword) {
-		setuserdata(userdata.email, userdata.username, userdata.password);
-		email=userdata.email
-		password=userdata.password;
-		username=userdata.username;
-		navigation.navigate("Login",{
-			email:userdata.email,
-			password:userdata.password,
-			username:userdata.username,
-		})
-	  } else {
-		Alert.alert('wrong info ');
-		return;
-	  }
-	// navigation.navigate("Login",{
-	// 	email:userdata.email,
-	// 	password:userdata.password,
-	// 	username:userdata.username,
-	// })
+	//   if (userdata.email === '' || userdata.username === '' || userdata.password === '') {
+	// 	Alert.alert("no info provided!");
+	// 	return ;
+	//   }
+	//   else if(!emailRegex.test(userdata.email) && !specialChars.test(userdata.password)) return ;
+	//   if (userdata.password === repeatPassword) {
+	// 	setuserdata(userdata.email, userdata.username, userdata.password);
+	// 	AsyncStorage.setItem('email', userdata.email);
+	// 	AsyncStorage.setItem('username', userdata.username);
+	// 	AsyncStorage.setItem('password', userdata.password);
+		
+	// 	navigation.navigate("Login")
+	//   } else {
+	// 	Alert.alert('wrong info ');
+	// 	return;
+	//   }
+	navigation.navigate("Login",{
+		email:userdata.email,
+		password:userdata.password,
+		username:userdata.username,
+	})
 	}
   
 	return (
