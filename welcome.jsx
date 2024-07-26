@@ -6,29 +6,36 @@ import { ThemeContext } from "./Context/Context";
 import { useContext } from "react";
 import Liked from "./Liked";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-
+import Cards from "./product";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 const Tab = createBottomTabNavigator();
-export default function Welcome({navigation}) {
+const Drawer = createDrawerNavigator();
+
+export default function Welcome({ navigation }) {
   const route = useRoute();
- 
+
   return (
-    <Tab.Navigator initialRouteName="Welcome">
-      <Tab.Screen name="Welcome" component={Tabs} options={{ title: "Welcome",headerShown:false }} initialParams={{route,navigation}}/>
-      <Tab.Screen name="WishList" component={Liked} options={{ title: "WishList",headerShown:false  }} />
-      <Tab.Screen 
-        name="LogOut" 
-        component={LogOutScreen} 
-        options={{ title: "LogOut" }} 
-      />
-    </Tab.Navigator>
-  )
-  
+    <Drawer.Navigator initialRouteName="Welcome">
+      <Drawer.Screen name="Welcome" component={Tabs} options={{ title: "Welcome", headerShown: false }} initialParams={{ route, navigation }} />
+      <Drawer.Screen name="WishList" component={Liked} options={{ title: "WishList", headerShown: false }} />
+      {/* <Drawer.Screen name="Cart" component={Cart} options={{ title: "Cart", headerShown: false }} /> */}
+      <Drawer.Screen name="LogOut" component={LogOutScreen} options={{ title: "LogOut" }} />
+    </Drawer.Navigator>
+  );
 }
 
-function Tabs({route,navigation}){
+function Tabs({ route, navigation }) {
   const { theme } = useContext(ThemeContext);
   const username = route.params?.username || "User";
+  return (
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home", headerShown: false }} initialParams={{ route, navigation }} />
+      <Tab.Screen name="Products" component={Cards} options={{ title: "Products", headerShown: false }} />
+    </Tab.Navigator>
+  );
+}
+
+function HomeScreen({ route, navigation }) {
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: theme }}>
       <Text style={styles.greeting}>Hello {username}!</Text>
