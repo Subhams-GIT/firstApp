@@ -7,12 +7,14 @@ import { useContext } from "react";
 import Liked from "./Liked";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Cards from "./product";
+import Cart from "./CartPage";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function Welcome({ navigation }) {
   const route = useRoute();
+
 
   return (
     <Drawer.Navigator initialRouteName="Welcome">
@@ -31,6 +33,7 @@ function Tabs({ route, navigation }) {
     <Tab.Navigator initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home", headerShown: false }} initialParams={{ route, navigation }} />
       <Tab.Screen name="Products" component={Cards} options={{ title: "Products", headerShown: false }} />
+      <Tab.Screen name="Cart" component={Cart} options={{ title: "cart", headerShown: false }} />
     </Tab.Navigator>
   );
 }

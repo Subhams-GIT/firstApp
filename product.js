@@ -10,15 +10,49 @@ import {
 import links from "./assets/products";
 import {useState, useContext} from "react";
 import FavoriteProvider, {FavoriteContext} from "./Context/FavouriteContext";
-const Item = ({name}) => (
+import { CartContext } from "./Context/cartlogic";
+const Item = ({product}) => {
+  const {favorites, addFavorite, removeFavorite} = useContext(FavoriteContext);
+  const {cart,addToCart,removeFromCart,UpdateQuantity}=useContext(CartContext);
+  let incart=cart.some(car => car.key === product.key);
+  let isFavorite = favorites.some(fav => fav.key === product.key);
+
+  const toggleLike = () => {
+    console.log(isFavorite);
+    isFavorite=isFavorite?false:true
+    incart=incart?false:true
+    console.log(isFavorite);
+    if (isFavorite) {
+      addFavorite(product);
+      
+    } else {
+      removeFavorite(product.key);
+    }
+    if (incart) {
+      addToCart(product);
+      
+    } else {
+      removeFromCart(product.key);
+    }
+    console.log(isFavorite);
+    console.log(favorites);
+  };
+  return (
   <View style={style.container}>
     <View style={{display: "flex"}}>
-      <LikeButton product={name} />
+    <Pressable onPress={()=>toggleLike}>
+      <Text style={style.button} onPress={()=>toggleLike()}>
+        {isFavorite ? "Remove from WishList" : "Add to WishList"}
+      </Text>
+      <Text style={style.button} onPress={()=>toggleLike()}>
+        {incart ? "remove from cart" : "Add to cart"}
+      </Text>
+    </Pressable>
       <Text style={{fontSize: 20, width: "80%", paddingLeft: 10}}>
-        Product: {name.name}
+        Product: {product.name}
       </Text>
       <Text style={{fontSize: 20, width: "100%", paddingLeft: 10}}>
-        Price: ${name.price} only
+        Price: ${product.price} only
       </Text>
     </View>
 
@@ -32,7 +66,8 @@ const Item = ({name}) => (
       source={name.image}
     />
   </View>
-);
+  )
+}
 
 export default function Cards() {
   return (
@@ -51,7 +86,7 @@ export default function Cards() {
 
         <FlatList
           data={links}
-          renderItem={({item}) => <Item name={item} />}
+          renderItem={({item}) => <Item product={item} />}
           style={{backgroundColor: "#1e90ff"}}
           keyExtractor={(item) => item.key}
         />
@@ -60,33 +95,7 @@ export default function Cards() {
   );
 }
 
-const LikeButton = ({product}) => {
-  const {favorites, addFavorite, removeFavorite} = useContext(FavoriteContext);
 
-  let isFavorite = favorites.some(fav => fav.key === product.key);
-
-  const toggleLike = () => {
-    console.log(isFavorite);
-    isFavorite=isFavorite?false:true
-    console.log(isFavorite);
-    if (isFavorite) {
-      addFavorite(product);
-      
-    } else {
-      removeFavorite(product.key);
-    }
-    console.log(isFavorite);
-    console.log(favorites);
-  };
-
-  return (
-    <Pressable onPress={()=>toggleLike}>
-      <Text style={style.button} onPress={()=>toggleLike()}>
-        {isFavorite ? "Remove from WishList" : "Add to WishList"}
-      </Text>
-    </Pressable>
-  );
-};
 
 export const style = StyleSheet.create({
   main: {

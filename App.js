@@ -9,18 +9,22 @@ import Cards from "./product";
 import Welcome from "./welcome";
 import ThemeProvider from "./Context/Context";
 import FavoriteProvider from "./Context/FavouriteContext";
+import { CartContext,CartProvider } from "./Context/cartlogic";
+import Cart from "./CartPage";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <CartProvider>
+      <ThemeProvider>
       <FavoriteProvider>
         <NavigationContainer>
           <Stacks />
         </NavigationContainer>
       </FavoriteProvider>
     </ThemeProvider>
+    </CartProvider>
   );
 }
 
@@ -32,6 +36,7 @@ function Stacks() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Products" component={Cards} />
+      <Stack.Screen name="cart" component={Cart} />
     </Stack.Navigator>
   );
 }
